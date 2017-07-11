@@ -42,7 +42,8 @@ def snf_get_flavors(cls, req):
     req.environ['method_name'] = 'flavors_get'
     req.environ['kwargs'] = {'detail': True}
     response = req.get_response(cls.app)
-    return cls.get_from_response(response, 'flavors', [])
+    r = cls.get_from_response(response, 'flavors', [])
+    return [flavor for flavor in r if flavor['SNF:allow_create']]
 
 
 @check_activation
